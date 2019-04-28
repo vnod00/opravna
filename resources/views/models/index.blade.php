@@ -11,6 +11,6 @@
                 <small>Založeno dne {{$model->created_at}}</small>
             </div>
         @endforeach
-        {{$models->links()}}
+         {{$models->links()}} 
     @endif
 @endsection

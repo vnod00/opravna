@@ -5,7 +5,7 @@
     {!! Form::open(['action' => 'DeviceBrandController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('brand', 'Název')}}
-            {{Form::text('brand', '', ['class' => 'form-control', 'placeholder' => 'Název'])}}
+            {{Form::text('brand', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>
         {{Form::submit('Ulož', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}

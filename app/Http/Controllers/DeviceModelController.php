@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DeviceModel;
+use App\DeviceBrand;
 use DB;
 
 class DeviceModelController extends Controller
@@ -15,10 +16,10 @@ class DeviceModelController extends Controller
      */
     public function index()
     {
-      // return $models = DeviceBrand::with('model')->get();
-      //$models = DeviceModel::find(1)->model;
+       // return $models = DeviceBrand::with('model')->get();
+      // $models = DeviceBrand::find(2)->model;
+      
       $models = DeviceModel::orderBy('model_name','desc')->paginate(2);
-    // $models = DeviceBrand::orderBy('brand_name','desc')->paginate(2);
        return view('models.index')->with('models',$models);
     }
 
@@ -77,7 +78,8 @@ class DeviceModelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = DeviceModel::find($id);
+        return view('models.edit')->with('model', $model);
     }
 
     /**

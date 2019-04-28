@@ -1,9 +1,13 @@
-<div class="form-group">
-        <input type="text" name="brand_name" id="brand_name" class="form-control input-lg" placeholder="Vyhledat..." />
+@if (isset($model))
+{{Form::text('brand_name', $model->brand_name, ['id' => 'brand_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
+@else
+{{Form::text('brand_name', '', ['id' => 'brand_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
+@endif
+        
         <div id="brandList" class="list-group">
         </div>
 
-       </div>
+       
        {{ csrf_field() }}
        <script>
             $(document).ready(function(){

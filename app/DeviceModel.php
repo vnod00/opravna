@@ -12,6 +12,6 @@ class DeviceModel extends Model
 
      public function brand()
     {
-        return $this->belongsTo('App\DeviceBrand');
+        return $this->belongsTo('App\DeviceBrand','brand_id', 'brand_id');
     } 
 }

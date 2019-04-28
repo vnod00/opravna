@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <title>{{config('app.name' , 'Evidence oprav')}}</title>
-
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     </head>
     <body class = "text-center">

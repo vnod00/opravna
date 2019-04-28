@@ -23,4 +23,10 @@ Route::get('/', 'PagesController@index');
  Route::resource('orders', 'OrderController');
  Route::resource('models', 'DeviceModelController');
  Route::resource('brands', 'DeviceBrandController');
+ Route::resource('customers', 'CustomerController');
+ Route::resource('repairs', 'RepairController');
  Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
