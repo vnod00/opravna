@@ -7,6 +7,6 @@
             {{Form::label('brand', 'Název')}}
             {{Form::text('brand', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>
-        {{Form::submit('Ulož', ['class'=>'btn btn-primary'])}}
+        {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
     {!! Form::close() !!}
 @endsection

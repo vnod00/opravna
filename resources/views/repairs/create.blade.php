@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
  
 @endsection
 @section('content')
@@ -18,7 +18,7 @@
                 {{Form::label('descp', 'Popis opravy')}}
                 {{Form::textarea('descp', '', [ 'id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>   
-        {{Form::submit('Ulož', ['class'=>'btn btn-primary'])}}
+        {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
     {!! Form::close() !!}
     
 @endsection

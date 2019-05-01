@@ -41,4 +41,34 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role');
     }
+
+        /**
+     * @param string|array $roles
+     */
+    public function authorizeRoles($roles)
+    {
+        if (is_array($roles)) {
+            return $this->hasAnyRole($roles) ||
+                abort(401, 'Nemáte dostatečnou autorizaci.');
+        }
+        return $this->hasRole($roles) ||
+            abort(401, 'Nemáte dostatečnou autorizaci.');
+    }
+    /**
+* Check multiple roles
+* @param array $roles
+*/
+public function hasAnyRole($roles)
+{
+  return null !== $this->roles()->whereIn(‘name’, $roles)->first();
+}
+/**
+* Check one role
+* @param string $role
+*/
+public function hasRole($role)
+{
+  return null !== $this->roles()->where(‘name’, $role)->first();
+}
+    
 }

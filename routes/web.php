@@ -27,6 +27,10 @@ Route::get('/', 'PagesController@index');
  Route::resource('repairs', 'RepairController');
  Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');
 
+ Auth::routes();
+
+ Route::get('/home', 'HomeController@index')->name('home');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

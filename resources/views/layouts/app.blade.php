@@ -7,7 +7,9 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <title>{{config('app.name' , 'Evidence oprav')}}</title>
-        
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         
         
         @yield('head') 

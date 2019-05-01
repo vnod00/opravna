@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
  
 @endsection
 @section('content')

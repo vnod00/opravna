@@ -91,7 +91,21 @@ class DeviceModelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'model' => 'required',
+            'imei' => 'required',
+            'brand_name' => 'required'
+        ]);
+        //create post
+        $device = DeviceModel::find($id);
+        $device->model_name = $request->input('model');
+        $device->imei = $request->input('imei');
+        $device->brand_id  = DB::table('device_brands')
+        ->where('brand_name', "{$request->input('brand_name')}")->value('brand_id');
+        $device->save(); 
+        
+        
+        return redirect('/models')->with('success', 'Telefon editován!');
     }
 
     /**
@@ -102,8 +116,11 @@ class DeviceModelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = DeviceModel::find($id);
+        $model->delete();
+        return redirect('/models')->with('success', 'Telefon vymazán!');
     }
+    
     function fetch(Request $request)
     {
      if($request->get('query'))
