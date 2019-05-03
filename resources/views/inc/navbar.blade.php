@@ -39,7 +39,12 @@
                     <a class="dropdown-item" href="/models">Přehled telefonů</a>
                     <a class="dropdown-item" href="/models/create">Zaeviduj telefon</a>
                     <a class="dropdown-item" href="/brands">Přehled výrobců</a>
-                    <a class="dropdown-item" href="/brands/create">Zaeviduj výrobce</a>
+                    @auth
+                    @if( Auth::user()->hasRole(['admin']))
+                        <a class="dropdown-item" href="/brands/create">Zaeviduj výrobce</a>
+                    @endif
+                    @endauth
+                    
                   </div>
               </div>
               <div class="dropdown">
@@ -57,7 +62,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/staff">Přehled zaměstnaců</a>
-                    <a class="dropdown-item" href="/staff/create">Zaeviduj zaměstnance</a>
+                    <a class="dropdown-item" href="/staff/create">Zaeviduj zaměstnance</a>php
                   </div>
               </div>
             
@@ -78,7 +83,7 @@
               @else
                   <li class="nav-item dropdown">
                       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                          {{ Auth::user()->name }} <span class="caret"></span>
+                          {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<span class="caret"></span>
                       </a>
 
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

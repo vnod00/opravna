@@ -12,4 +12,9 @@
     {{Form::hidden('_method', 'DELETE')}}
     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
     {!! Form::close() !!}
+    <script>
+        $(".delete").on("submit", function(){
+            return confirm("Opravdu chcete tento telefon odstranit??");
+        });
+    </script>
 @endsection

@@ -10,13 +10,17 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $attributes = [
+        
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'role_id',
     ];
 
     /**
@@ -60,7 +64,7 @@ class User extends Authenticatable
 */
 public function hasAnyRole($roles)
 {
-  return null !== $this->roles()->whereIn(‘name’, $roles)->first();
+  return null !== $this->role()->whereIn('name', $roles)->first();
 }
 /**
 * Check one role
@@ -68,7 +72,7 @@ public function hasAnyRole($roles)
 */
 public function hasRole($role)
 {
-  return null !== $this->roles()->where(‘name’, $role)->first();
+  return null !== $this->role()->where('name', $role)->first();
 }
     
 }

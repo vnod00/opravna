@@ -25,12 +25,11 @@ Route::get('/', 'PagesController@index');
  Route::resource('brands', 'DeviceBrandController');
  Route::resource('customers', 'CustomerController');
  Route::resource('repairs', 'RepairController');
- Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');
+ 
 
+ Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');
+ Route::post('/auth/fetch', 'Auth\RegisterController@fetch')->name('auth.fetch');
  Auth::routes();
 
- Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+ Route::get('/logged', 'HomeController@logged')->name('logged');
+ Route::get('/registered', 'HomeController@registered')->name('registered');

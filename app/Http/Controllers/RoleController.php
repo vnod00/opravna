@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DeviceBrand;
-use DB;
 
-class DeviceBrandController extends Controller
+class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['index','show']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +13,10 @@ class DeviceBrandController extends Controller
      */
     public function index()
     {
-      // return $models = DeviceBrand::with('model')->get();
-      //$models = DeviceModel::find(1)->model;
-       $brands = DeviceBrand::orderBy('brand_name','desc')->paginate(20);
-    // $models = DeviceBrand::orderBy('brand_name','desc')->paginate(2);
-       return view('brands.index')->with('brands',$brands);
+      
+      $roles = Role::orderBy('role_name','desc')->paginate(20);
+    
+       return view('roles.index')->with('roles',$roles);
     }
 
     /**
@@ -31,10 +24,9 @@ class DeviceBrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $request->user()->authorizeRoles(['admin']);
-        return view('brands.create');
+        return view('roles.create');
     }
 
     /**
@@ -46,15 +38,15 @@ class DeviceBrandController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'brand' => 'required',
+            'role' => 'required',
         ]);
         //create post
-        $brand = new DeviceBrand;
-        $brand->brand_name = $request->input('brand');
-        $brand->save(); 
+        $role = new DeviceBrand;
+        $role->role_name = $request->input('role');
+        $role->save(); 
         
         
-        return redirect('/brands')->with('success', 'Výrobce uložen!');
+        return redirect('/roles')->with('success', 'Role uložen!');
     }
 
     /**

@@ -15,6 +15,6 @@ class DeviceBrand extends Model
      */
      public function model()
     {
-        return $this->hasMany('App\DeviceModel', 'brand_id', 'brand_id');
+        return $this->hasMany('App\DeviceModel', 'brand_id');
     } 
 }

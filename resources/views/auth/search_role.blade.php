@@ -1,10 +1,8 @@
-@if (isset($model))
-{{Form::text('brand_name', $model->brand->brand_name, ['id' => 'brand_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
-@else
-{{Form::text('brand_name', '', ['id' => 'brand_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
-@endif
+
+{{Form::text('role_name', '', ['id' => 'role_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
+
         
-        <div id="brandList" class="list-group">
+        <div id="nameList" class="list-group">
         </div>
 
        
@@ -12,26 +10,26 @@
        <script>
             $(document).ready(function(){
             
-             $('#brand_name').keyup(function(){ 
+             $('#role_name').keyup(function(){ 
                     var query = $(this).val();
                     if(query != '')
                     {
                      var _token = $('input[name="_token"]').val();
                      $.ajax({
-                      url:"{{ route('models.fetch') }}",
+                      url:"{{ route('auth.fetch') }}",
                       method:"POST",
                       data:{query:query, _token:_token},
                       success:function(data){
-                       $('#brandList').fadeIn();  
-                                $('#brandList').html(data);
+                       $('#nameList').fadeIn();  
+                                $('#nameList').html(data);
                       }
                      });
                     }
                 });
             
                 $(document).on('click', 'li', function(){  
-                    $('#brand_name').val($(this).text());  
-                    $('#brandList').fadeOut();  
+                    $('#role_name').val($(this).text());  
+                    $('#nameList').fadeOut();  
                 });  
             
             });
