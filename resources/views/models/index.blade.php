@@ -5,9 +5,11 @@
         @foreach ($models as $model)
             <div class="well">
                 <h3><a href="/models/{{$model->model_id}}">{{$model->brand->brand_name}} – {{$model->model_name}}</a></h3>
-                <p>Model: {{$model->model_name}}</p>
-                <p>IMEI: {{$model->imei}}</p>
-                <p>Značka: {{$model->brand->brand_name}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Model: {{$model->model_name}}</li>
+                    <li class="list-group-item">IMEI: {{$model->imei}}</li>
+                    <li class="list-group-item">Značka: {{$model->brand->brand_name}}</li>
+                </ul>    
                 <small>Založeno dne {{$model->created_at}}</small>
             </div>
             <hr>

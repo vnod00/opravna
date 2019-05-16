@@ -26,7 +26,13 @@
         <script>
             CKEDITOR.replace( 'article-ckeditor' );
         </script>
-    
+        <script type="text/javascript">
+             $('.date').datetimepicker({
+                locale: 'cs',
+                format: 'YYYY-MM-DD',
+            });  
+            
+        </script> 
       </body>
     </body>
 </html>

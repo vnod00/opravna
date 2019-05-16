@@ -14,6 +14,6 @@ class Role extends Model
     public $timestamps = true;  
 
     public function user(){
-        return $this->hasMany('App\User');
+        return $this->hasMany('App\User', 'role_id');
     }
 }

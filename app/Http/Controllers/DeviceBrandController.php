@@ -8,9 +8,10 @@ use DB;
 
 class DeviceBrandController extends Controller
 {
+    
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show']);
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +34,7 @@ class DeviceBrandController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles('admin');
         return view('brands.create');
     }
 

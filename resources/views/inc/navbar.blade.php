@@ -40,11 +40,10 @@
                     <a class="dropdown-item" href="/models/create">Zaeviduj telefon</a>
                     <a class="dropdown-item" href="/brands">Přehled výrobců</a>
                     @auth
-                    @if( Auth::user()->hasRole(['admin']))
+                    @if( Auth::user()->hasRole('admin'))
                         <a class="dropdown-item" href="/brands/create">Zaeviduj výrobce</a>
                     @endif
-                    @endauth
-                    
+                    @endauth               
                   </div>
               </div>
               <div class="dropdown">
@@ -62,7 +61,11 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/staff">Přehled zaměstnaců</a>
-                    <a class="dropdown-item" href="/staff/create">Zaeviduj zaměstnance</a>php
+                    @auth
+                    @if( Auth::user()->hasRole('admin'))                        
+                        <a class="dropdown-item" href="/register">Zaeviduj zaměstnance</a>                       
+                    @endif
+                    @endauth     
                   </div>
               </div>
             
@@ -71,16 +74,7 @@
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">
               <!-- Authentication Links -->
-              @guest
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ route('login') }}">{{ __('Přihlas se') }}</a>
-                  </li>
-                  @if (Route::has('register'))
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ route('register') }}">{{ __('Registruj') }}</a>
-                      </li>
-                  @endif
-              @else
+              
                   <li class="nav-item dropdown">
                       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                           {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<span class="caret"></span>
@@ -98,7 +92,7 @@
                           </form>
                       </div>
                   </li>
-              @endguest
+              
           </ul>
       </div>
   </div>

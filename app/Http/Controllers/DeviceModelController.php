@@ -9,18 +9,28 @@ use DB;
 
 class DeviceModelController extends Controller
 {
+       /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
        // return $models = DeviceBrand::with('model')->get();
-      // $models = DeviceBrand::find(2)->model;
+       // $models = DeviceBrand::find(2)->model;
       
-      $models = DeviceModel::orderBy('model_name','desc')->paginate(2);
-       return view('models.index')->with('models',$models);
+        $models = DeviceModel::orderBy('model_name','desc')->paginate(10);
+        return view('models.index')->with('models',$models);
     }
 
     /**
@@ -90,7 +100,7 @@ class DeviceModelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
         $this->validate($request,[
             'model' => 'required',
             'imei' => 'required',

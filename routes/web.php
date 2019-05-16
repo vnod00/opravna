@@ -25,8 +25,9 @@ Route::get('/', 'PagesController@index');
  Route::resource('brands', 'DeviceBrandController');
  Route::resource('customers', 'CustomerController');
  Route::resource('repairs', 'RepairController');
- 
-
+ Route::post('/orders/fetch_staff', 'OrderController@fetchStaff')->name('orders.fetch_staff');
+ Route::post('/orders/fetch_cus', 'OrderController@fetch')->name('orders.fetch');
+ Route::post('/orders/fetch_mod', 'OrderController@fetchMod')->name('orders.fetch_mod');
  Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');
  Route::post('/auth/fetch', 'Auth\RegisterController@fetch')->name('auth.fetch');
  Auth::routes();
