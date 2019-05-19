@@ -1,5 +1,8 @@
-{{Form::text('model_name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}} 
-
+@if (isset($order))   
+{{Form::text('model_name', $order->model->imei.' '.$order->model->brand->brand_name.' '.$order->model->model_name, ['id' => 'model_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@else
+{{Form::text('model_name', '', ['id' => 'model_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@endif
         <div id="modList" class="list-group">
         </div>
 
@@ -25,7 +28,7 @@
                     }
                 });
             
-                $(document).on('click', 'li', function(){  
+                $(document).on('click', '.mod_offer', function(){  
                     $('#model_name').val($(this).text());  
                     $('#modList').fadeOut();  
                 });  

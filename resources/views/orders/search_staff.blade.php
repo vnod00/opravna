@@ -1,4 +1,8 @@
-{{Form::text('user_name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}} 
+@if (isset($order))   
+{{Form::text('user_name', '', ['id' => 'user_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@else
+{{Form::text('user_name', '', ['id' => 'user_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@endif
 
         <div id="userList" class="list-group">
         </div>
@@ -25,7 +29,7 @@
                     }
                 });
             
-                $(document).on('click', 'li', function(){  
+                $(document).on('click', '.user_offer', function(){  
                     $('#user_name').val($(this).text());  
                     $('#userList').fadeOut();  
                 });  

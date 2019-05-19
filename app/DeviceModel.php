@@ -14,4 +14,8 @@ class DeviceModel extends Model
     {
         return $this->belongsTo('App\DeviceBrand', 'brand_id');
     } 
+    public function order()
+    {
+        return $this->hasMany('App\Order', 'model_id');
+    }
 }

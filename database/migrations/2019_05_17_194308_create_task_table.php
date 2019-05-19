@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderRepairTable extends Migration
+class CreateTaskTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateOrderRepairTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_repair', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->Integer('ord_id');
-            $table->Integer('rep_id');
+        Schema::create('task', function (Blueprint $table) {
+            $table->bigIncrements('task_id');
+            $table->string('desc');
+            $table->timestamps();
         });
     }
 
@@ -27,7 +27,6 @@ class CreateOrderRepairTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_repair');
+        Schema::dropIfExists('task');
     }
 }
-

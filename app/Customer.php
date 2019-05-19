@@ -10,11 +10,8 @@ class Customer extends Model
     public $primaryKey = 'cus_id';
     public $timestamps = true;
 
-    /**
-     * Get the comments for the blog post.
-     */
-    /*  public function model()
+     public function order()
     {
-        return $this->hasMany('App\DeviceModel');
-    }  */
+        return $this->hasMany('App\Order', 'cus_id');
+    }  
 }

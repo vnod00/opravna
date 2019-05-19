@@ -10,8 +10,8 @@ class Repair extends Model
     public $primaryKey = 'rep_id';
     public $timestamps = true;
 
-     /* public function brand()
+    public function order()
     {
-        return $this->belongsTo('App\DeviceBrand','brand_id', 'brand_id');
-    }  */
+        return $this->belongsToMany('App\Order','order_repair');
+    }  
 }

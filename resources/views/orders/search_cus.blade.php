@@ -1,5 +1,8 @@
-{{Form::text('cus_name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}} 
-
+@if (isset($order))   
+{{Form::text('cus_name', $order->customer->name.' '.$order->customer->surname.' '.$order->customer->email, ['id' => 'cus_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@else
+{{Form::text('cus_name', '', ['id' => 'cus_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+@endif
         <div id="cusList" class="list-group">
         </div>
 
@@ -25,7 +28,7 @@
                     }
                 });
             
-                $(document).on('click', 'li', function(){  
+                $(document).on('click', '.cus_offer', function(){  
                     $('#cus_name').val($(this).text());  
                     $('#cusList').fadeOut();  
                 });  

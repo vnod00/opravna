@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repair;
-use DB;
 
-class RepairController extends Controller
+class Task extends Controller
 {
+
        /**
      * Create a new controller instance.
      *
@@ -24,11 +23,10 @@ class RepairController extends Controller
      */
     public function index()
     {
-       // return $models = DeviceBrand::with('model')->get();
-      // $models = DeviceBrand::find(2)->model;
       
-      $repairs = Repair::orderBy('name','desc')->paginate(2);
-       return view('repairs.index')->with('repairs',$repairs);
+      $task = Task::orderBy('desc','desc')->paginate(20);
+    
+       return view('tasks.index')->with('tasks',$tasks);
     }
 
     /**
@@ -38,7 +36,7 @@ class RepairController extends Controller
      */
     public function create()
     {
-        return view('repairs.create');
+        return view('roles.create');
     }
 
     /**
@@ -50,19 +48,15 @@ class RepairController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required',
-            'descp' => 'required',
-            'price' => 'required'
+            'role' => 'required',
         ]);
         //create post
-        $repair = new Repair;
-        $repair->name = $request->input('name');
-        $repair->descp = $request->input('descp');
-        $repair->price  = $request->input('price');
-        $repair->save(); 
+        $role = new DeviceBrand;
+        $role->role_name = $request->input('role');
+        $role->save(); 
         
         
-        return redirect('/repairs')->with('success', 'Oprava uložena!');
+        return redirect('/roles')->with('success', 'Role uložen!');
     }
 
     /**
@@ -73,8 +67,7 @@ class RepairController extends Controller
      */
     public function show($id)
     {
-        $model = Repair::find($id);
-        return view('repairs.show')->with('model', $model);
+       //
     }
 
     /**

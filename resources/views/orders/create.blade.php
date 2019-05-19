@@ -31,7 +31,7 @@
                 {{Form::textarea('descp', '', [ 'id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>
         <div class="form-group">
-            {{Form::label('user_name', 'Přiřaď opraváře')}}
+            {{Form::label('user_name', 'Přiřaď zaměstnance')}}
             @include('orders.search_staff')
         </div>   
         {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
