@@ -3,17 +3,30 @@
     <h1>Evidované modely telefonů</h1>
     @if (count($models) >= 1)
         @foreach ($models as $model)
-            <div class="well">
-                <h3><a href="/models/{{$model->model_id}}">{{$model->brand->brand_name}} – {{$model->model_name}}</a></h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Model: {{$model->model_name}}</li>
-                    <li class="list-group-item">IMEI: {{$model->imei}}</li>
-                    <li class="list-group-item">Značka: {{$model->brand->brand_name}}</li>
-                </ul>    
-                <small>Založeno dne {{$model->created_at}}</small>
-            </div>
-            <hr>
+           <div class="d-flex justify-content-center">
+            <div class="card m-3 " >
+                <div class="card" >
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{$model->brand->brand_name}} {{$model->model_name}}</h5>
+                      <p class="card-text"><b>IMEI:</b> {{$model->imei}}</p>
+                      <small>Založeno dne {{$model->created_at}}</small>
+                      <a href="/models/{{{$model->model_id}}}/edit" class="btn btn-primary" role="button" aria-pressed="true">Upravit</a>
+                      {!! Form::open(['action' => ['DeviceModelController@destroy', $model->model_id], 'method' => 'POST', 'class' => 'float-right delete']) !!}
+                      {{Form::hidden('_method', 'DELETE')}}
+                      {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                      {!! Form::close() !!}
+                    </div>
+                  </div>
+                </div>
         @endforeach
-         {{$models->links()}} 
     @endif
+    <script>
+        $(".delete").on("submit", function(){
+            return confirm("Opravdu chcete tento telefon odstranit??");
+        });
+    </script>
+    
 @endsection
+
+    

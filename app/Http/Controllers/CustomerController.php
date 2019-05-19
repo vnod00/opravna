@@ -25,7 +25,7 @@ class CustomerController extends Controller
     {
       // return $models = DeviceBrand::with('model')->get();
       //$models = DeviceModel::find(1)->model;
-     $cust = Customer::orderBy('surname','desc')->paginate(20);
+     $cust = Customer::orderBy('email','desc')->paginate(20);
     // $models = DeviceBrand::orderBy('brand_name','desc')->paginate(2);
        return view('customers.index')->with('cust',$cust);
     }
@@ -47,17 +47,19 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $this->validate($request,[
-            'name' => 'required',
-            'surname' => 'required',
-            'street' => 'required',
-            'house_num' => 'required',
-            'city' => 'required',
-            'post_code' => 'required',
-            'phone_num' => 'required',
-            'email' => 'required',
+            'name' => 'required|max:80',
+            'surname' => 'required_without:ico|max:80',
+            'street' => 'required|max:80',
+            'house_num' => 'required|numeric|max:10',
+            'ico' => 'nullable|numeric|max:8',
+            'city' => 'required|max:80',
+            'post_code' => 'required|regex:/\d{5}/',
+            'phone_num' => 'required|regex:/\d{9}/',
+            'email' => 'required|email',
         ]);
+
         //create post
         $cust = new Customer;
         $cust->ico = $request->input('ico');
@@ -85,7 +87,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-       //
+        $cust = Customer::find($id);
+        return view('customers.show')->with('cust',$cust);
     }
 
     /**
@@ -96,7 +99,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cust = Customer::find($id);
+        return view('customers.edit')->with('cust',$cust);
     }
 
     /**

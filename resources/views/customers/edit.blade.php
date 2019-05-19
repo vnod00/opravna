@@ -5,42 +5,42 @@
 @endsection
 @section('content')
     <h1>Zaeviduj nového zakazníka</h1>
-    {!! Form::open(['action' => 'CustomerController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => 'CustomerController@update', $cust->cus_id, 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('name', 'Jméno nebo název firmy')}}
-            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}}
+            {{Form::text('name', $cust->name, ['class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>
         <div class="form-group">
             {{Form::label('surname', 'Přijmení')}}
-            {{Form::text('surname', '', [ 'class' => 'form-control', 'placeholder' => 'Nepovinné'])}}
+            {{Form::text('surname', $cust->surname, [ 'class' => 'form-control', 'placeholder' => 'Nepovinné'])}}
         </div>
         <div class="form-group">
                 {{Form::label('ico', 'IČO')}}
-                {{Form::text('ico', '', [ 'class' => 'form-control', 'placeholder' => 'Nepovinné'])}}
+                {{Form::text('ico', $cust->ico, [ 'class' => 'form-control', 'placeholder' => 'Nepovinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('city', 'Město')}}
-                {{Form::text('city', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('city', $cust->city, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('street', 'Ulice')}}
-                {{Form::text('street', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('street', $cust->street, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('house_num', 'Číslo popisné')}}
-                {{Form::text('house_num', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('house_num', $cust->house_num, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('post_code', 'PSČ')}}
-                {{Form::text('post_code', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('post_code', $cust->post_code, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('phone_num', 'Telefoní číslo')}}
-                {{Form::text('phone_num', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('phone_num', $cust->phone_num, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div> 
         <div class="form-group">
                 {{Form::label('email', 'Email')}}
-                {{Form::text('email', '', [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
+                {{Form::text('email', $cust->email, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
         </div>    
         {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
     {!! Form::close() !!}

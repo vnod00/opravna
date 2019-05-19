@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
   <div class="container">
-      <a class="navbar-brand" href="{{ url('/') }}">
+      <a class="navbar-brand" href="{{ url('/orders') }}">
           {{ config('app.name', 'Laravel') }}
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -10,16 +10,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/about">O nás</a>
-              </li>
+              
               <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Zakázky
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/orders">Přehled zakázek</a>
-                    <a class="dropdown-item" href="/orders/create">Vytvoř zakázku</a>
+                    @auth
+                    @if( Auth::user()->hasAnyRole(['admin','prodavac']))
+                        <a class="dropdown-item" href="/orders/create">Vytvoř zakázku</a>
+                    @endif
+                    @endauth
+                    
                   </div>
               </div>
               <div class="dropdown">
@@ -27,8 +30,12 @@
                       Opravy
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/repairs">Přehled oprav</a>
-                    <a class="dropdown-item" href="/repairs/create">Zaeviduj opravu</a>
+                    <a class="dropdown-item" href="/repairs">Přehled oprav</a>                  
+                    @auth
+                    @if( Auth::user()->hasAnyRole(['admin','opravar']))
+                        <a class="dropdown-item" href="/repairs/create">Zaeviduj opravu</a>
+                    @endif
+                    @endauth
                   </div>
               </div>
               <div class="dropdown">
@@ -36,8 +43,12 @@
                       Evidence telefonů
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/models">Přehled telefonů</a>
-                    <a class="dropdown-item" href="/models/create">Zaeviduj telefon</a>
+                    <a class="dropdown-item" href="/models">Přehled telefonů</a> 
+                    @auth
+                    @if( Auth::user()->hasAnyRole(['admin','prodavac']))
+                        <a class="dropdown-item" href="/models/create">Zaeviduj telefon</a>
+                    @endif
+                    @endauth
                     <a class="dropdown-item" href="/brands">Přehled výrobců</a>
                     @auth
                     @if( Auth::user()->hasRole('admin'))
@@ -52,7 +63,12 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="/customers">Přehled zákazníků</a>
-                  <a class="dropdown-item" href="/customers/create">Vytvoř zákazníka</a>
+                  @auth
+                  @if( Auth::user()->hasAnyRole(['admin','prodavac']))
+                    <a class="dropdown-item" href="/customers/create">Vytvoř zákazníka</a> 
+                  @endif
+                  @endauth
+                  
                 </div>
               </div>
               <div class="dropdown">
@@ -67,8 +83,9 @@
                     @endif
                     @endauth     
                   </div>
+                  
               </div>
-            
+              
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -92,7 +109,10 @@
                           </form>
                       </div>
                   </li>
-              
+                  <li class="nav-item">
+                        <a class="nav-link" href="/about">O aplikaci</a>
+                      </li>
+                      
           </ul>
       </div>
   </div>

@@ -50,9 +50,9 @@ class RepairController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required',
-            'descp' => 'required',
-            'price' => 'required'
+            'name' => 'required|max:80',
+            'descp' => 'required|max:2000',
+            'price' => 'required|numeric|max:100000'
         ]);
         //create post
         $repair = new Repair;
@@ -73,8 +73,7 @@ class RepairController extends Controller
      */
     public function show($id)
     {
-        $model = Repair::find($id);
-        return view('repairs.show')->with('model', $model);
+
     }
 
     /**
@@ -85,7 +84,8 @@ class RepairController extends Controller
      */
     public function edit($id)
     {
-        //
+        $repair = Repair::find($id);
+        return view('repairs.edit')->with('repair', $repair);
     }
 
     /**
@@ -108,7 +108,17 @@ class RepairController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $repair = Repair::find($id);
+        $check = DB::table('order_repair')
+        ->where('rep_id', '=', $repair->rep_id)
+        ->get(); 
+        //return $check;
+        if ($check = '[]') {
+            $repair->delete();
+            return redirect('/repairs')->with('success', 'Oprava vymazána!');
+        }
+        
+        return redirect('/repairs')->with('error', 'Oprava nelze vymazat, je vázaná z nějaké zakázce!');
     }
     
 }

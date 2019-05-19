@@ -27,7 +27,6 @@ Route::get('/', 'PagesController@index');
  Route::resource('repairs', 'RepairController');
  Route::resource('tasks', 'TaskController');
  Route::post('/orders/destroy_repair', 'OrderController@destroyRepair($id, $name)');
- Route::post('/orders/fetch_staff', 'OrderController@fetchStaff')->name('orders.fetch_staff');
  Route::post('/orders/fetch_cus', 'OrderController@fetch')->name('orders.fetch');
  Route::post('/orders/fetch_mod', 'OrderController@fetchMod')->name('orders.fetch_mod');
  Route::post('/models/fetch', 'DeviceModelController@fetch')->name('models.fetch');

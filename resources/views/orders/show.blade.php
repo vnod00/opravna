@@ -9,7 +9,7 @@
     <hr>
     <small>Založeno dne {{$order->created_at}}</small>
     <a href="/orders" class="btn btn-default">Zpět</a>
-    <a href="/orders/{{{$order->ord_id}}}/edit" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Upravit</a>
+    <a href="/orders/{{{$order->ord_id}}}/edit" class="btn btn-secondary float-right" role="button" aria-pressed="true">Upravit</a>
     {!! Form::open(['action' => ['OrderController@destroy', $order->ord_id], 'method' => 'POST', 'class' => 'float-right delete']) !!}
     {{Form::hidden('_method', 'DELETE')}}
     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}

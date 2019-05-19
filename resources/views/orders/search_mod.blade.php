@@ -1,7 +1,7 @@
 @if (isset($order))   
-{{Form::text('model_name', $order->model->imei.' '.$order->model->brand->brand_name.' '.$order->model->model_name, ['id' => 'model_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+{{Form::text('model_imei', $order->model->imei, ['id' => 'model_imei', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
 @else
-{{Form::text('model_name', '', ['id' => 'model_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
+{{Form::text('model_imei', '', ['id' => 'model_imei', 'class' => 'form-control', 'placeholder' => 'Vyhledat..'])}} 
 @endif
         <div id="modList" class="list-group">
         </div>
@@ -11,7 +11,7 @@
        <script>
             $(document).ready(function(){
             
-             $('#model_name').keyup(function(){ 
+             $('#model_imei').keyup(function(){ 
                     var query = $(this).val();
                     if(query != '')
                     {
@@ -29,7 +29,7 @@
                 });
             
                 $(document).on('click', '.mod_offer', function(){  
-                    $('#model_name').val($(this).text());  
+                    $('#model_imei').val($(this).text());  
                     $('#modList').fadeOut();  
                 });  
             

@@ -23,12 +23,12 @@
         {{Form::text('name', $order->name, ['class' => 'form-control', 'placeholder' => 'Povinné'])}} 
     </div>
     <div class="form-group">
-        {{Form::label('cus_name', 'Zákazník (Hledej dle e-mail)')}}
+        {{Form::label('cus_email', 'Zákazník (Hledej dle e-mail)')}}
         
         @include('orders.search_cus')
     </div>   
     <div class="form-group">
-        {{Form::label('model_name', 'Model telefonu (Hledej dle IMEI)')}}
+        {{Form::label('model_imei', 'IMEI telefonu')}}
         @include('orders.search_mod')
     </div>       
     <div class="form-group">
@@ -45,7 +45,7 @@
             <select name="rep_sel" class="form-control">
               <option  selected></option>
               @foreach ($repairs as $repair)               
-                    <option class="select_option" value="1">{{$repair->name}}</option>                                
+                    <option >{{$repair->name}}</option>                                
               @endforeach 
             </select> 
             

@@ -17,9 +17,9 @@ class CreateTaskDoneTable extends Migration
             $table->bigInteger('ord_id')->unsigned();
             $table->bigInteger('task_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('ord_id')->references('ord_id')->on('orders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('ord_id')->references('ord_id')->on('orders')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('task_id')->references('task_id')->on('tasks')->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -52,9 +52,9 @@ class DeviceModelController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'model' => 'required',
-            'imei' => 'required',
-            'brand_name' => 'required'
+            'model' => 'required|max:80',
+            'imei' => 'required|regex:/\d{15}/',
+            'brand_name' => 'required|exists:device_brands,brand_name'
         ]);
         //create post
         $device = new DeviceModel;
@@ -102,9 +102,9 @@ class DeviceModelController extends Controller
     public function update(Request $request, $id)
     {   
         $this->validate($request,[
-            'model' => 'required',
-            'imei' => 'required',
-            'brand_name' => 'required'
+            'model' => 'required|max:80',
+            'imei' => 'required|regex:/\d{15}/',
+            'brand_name' => 'required|exists:device_brands,brand_name'
         ]);
         //create post
         $device = DeviceModel::find($id);

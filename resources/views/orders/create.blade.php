@@ -14,26 +14,18 @@
             {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}} 
         </div>
         <div class="form-group">
-            {{Form::label('cus_name', 'Zákazník (Hledej dle e-mail)')}}
+            {{Form::label('cus_email', 'Zákazník (Hledej dle e-mail)')}}
             
             @include('orders.search_cus')
         </div>   
-        <div class="form-group col pl-0">
-            {{Form::label('date_acceptance', 'Datum přijetí')}}
-         {{Form::text('date_acceptance', null, ['class' => 'form-control date', 'id'=>'datepicker']) }}
-        </div>
         <div class="form-group">
-            {{Form::label('model_name', 'Model telefonu (Hledej dle IMEI)')}}
+            {{Form::label('model_imei', 'IMEI telefonu')}}
             @include('orders.search_mod')
         </div>       
         <div class="form-group">
                 {{Form::label('descp', 'Popis vady')}}
                 {{Form::textarea('descp', '', [ 'id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
-        </div>
-        <div class="form-group">
-            {{Form::label('user_name', 'Přiřaď zaměstnance')}}
-            @include('orders.search_staff')
-        </div>   
+        </div>  
         {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
     {!! Form::close() !!}
     

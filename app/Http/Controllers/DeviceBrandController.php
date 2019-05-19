@@ -46,8 +46,9 @@ class DeviceBrandController extends Controller
      */
     public function store(Request $request)
     {
+        $request->user()->authorizeRoles('admin');
         $this->validate($request,[
-            'brand' => 'required',
+            'brand' => 'required|max:40',
         ]);
         //create post
         $brand = new DeviceBrand;
@@ -77,6 +78,7 @@ class DeviceBrandController extends Controller
      */
     public function edit($id)
     {
+        $request->user()->authorizeRoles('admin');
         //
     }
 
@@ -89,6 +91,7 @@ class DeviceBrandController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->user()->authorizeRoles('admin');
         //
     }
 
@@ -100,6 +103,7 @@ class DeviceBrandController extends Controller
      */
     public function destroy($id)
     {
+        
         //
     }
     
