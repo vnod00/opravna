@@ -16,7 +16,7 @@ class UpdateOrderReapirTable extends Migration
         Schema::create('order_repair', function (Blueprint $table) {
             $table->bigInteger('ord_id')->unsigned();
             $table->bigInteger('rep_id')->unsigned();
-            $table->foreign('ord_id')->references('ord_id')->on('orders')->onDelete('restrict');
+            $table->foreign('ord_id')->references('ord_id')->on('orders')->onDelete('cascade');
             $table->foreign('rep_id')->references('rep_id')->on('repairs')->onDelete('restrict');
         });
     }

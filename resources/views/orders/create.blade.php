@@ -21,7 +21,11 @@
         <div class="form-group">
             {{Form::label('model_imei', 'IMEI telefonu')}}
             @include('orders.search_mod')
-        </div>       
+        </div>
+        <div class="form-group col pl-0">
+            {{Form::label('acc_date', 'Datum přijetí')}}
+            {{Form::text('acc_date', null, ['class' => 'form-control date', 'id'=>'datepicker', 'required']) }}
+        </div>        
         <div class="form-group">
                 {{Form::label('descp', 'Popis vady')}}
                 {{Form::textarea('descp', '', [ 'id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Povinné'])}}

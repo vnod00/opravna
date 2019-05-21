@@ -26,7 +26,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('created_at','desc')->paginate(10);
+        $orders = Order::orderBy('ord_id','asc')->paginate(10);
         
         return view('orders.index')->with('orders',$orders);
     }
@@ -53,12 +53,15 @@ class OrderController extends Controller
             'name' => 'required|max:80',
             'cus_email' => 'required|exists:customers,email',
             'descp' => 'required',
-            'model_imei' => 'required|exists:device_models,imei'
+            'model_imei' => 'required|exists:device_models,imei',
+            'acc_date' => 'required|date_format:Y-m-d',
+            'hand_date' => 'nullable|date_format:Y-m-d'
         ]);
         //create post
         $order = new Order;
         $order->name = $request->input('name');
-        $order->desc = $request->input('descp');    
+        $order->desc = $request->input('descp'); 
+        $order->date_acceptance = $request->input('acc_date');  
         $order->cus_id  = DB::table('customers')
         ->where('email', "{$request->input('cus_email')}")->value('cus_id');
         $order->model_id  = DB::table('device_models')
@@ -121,8 +124,8 @@ class OrderController extends Controller
             'cus_email' => 'required|exists:customers,email',
             'descp' => 'required',
             'model_imei' => 'required|exists:device_models,imei',
-            'task_sel' => 'required'
-            
+            'rep_sel' => 'nullable|exists:repairs,name',
+            'task_sel' => 'nullable|exists:tasks,desc',
         ]);
         //create post
         $order = Order::find($id);
@@ -132,20 +135,21 @@ class OrderController extends Controller
         ->where('email', "{$request->input('cus_email')}")->value('cus_id');
         $order->model_id  = DB::table('device_models')
         ->where('imei', "{$request->input('model_imei')}")->value('model_id');
-        $order->save();  
-
-        $task_done = new TaskDone;
-        $task_done->ord_id = $order->ord_id;
-        $task_done->task_id = DB::table('tasks')
-        ->where('desc', $request->input('task_sel'))->value('task_id');
-        $task_done->user_id = Auth::id();      
-        $task_done->save();
-
-        $repair = DB::table('repairs')
-        ->where('name', $request->input('rep_sel'))->value('rep_id');    
-        $id = $order->ord_id;
-        Order::find($id)->repair()->attach($repair);
-        return redirect('/orders')->with('success', 'Zakázka upravena!'); 
+        $order->save();
+        if (($request->input('task_sel')) != []) {
+            $task_done = TaskDone::find($id);
+            $task_done->task_id = DB::table('tasks')
+            ->where('desc', $request->input('task_sel'))->value('task_id');
+            $task_done->user_id = Auth::id();      
+            $task_done->save();
+        }
+        
+        if (($request->input('rep_sel')) != []) {
+            $repair = DB::table('repairs')
+            ->where('name', $request->input('rep_sel'))->value('rep_id');    
+            Order::find($id)->repair()->attach($repair);
+        }
+        return redirect('/orders/'.$id)->with('success', 'Zakázka upravena!'); 
         
     }
 
@@ -162,17 +166,15 @@ class OrderController extends Controller
         return redirect('/orders')->with('success', 'Zakázka vymazána!');
     }
 
-    function destroyRepair($id)
+    public function destroyRepair($id, $rep_id)
     {
-        $rep = DB::table('order_repair')
-        ->where('rep_id', '=', $id)
-        ->get();
-        $ord_id = DB::table('order_repair')
-        ->where('rep_id', '=', $id)
-        ->value('ord_id');
-        //$rep->delete();
-        return ('/orders/');
-        //redirect('/orders/'.$ord_id.'/edit')
+          DB::table('order_repair')
+        ->where('ord_id', '=', $id)
+        ->where('rep_id', '=', $rep_id)
+        ->delete(); 
+       // Order::find($id)->repair()->delete($rep_id);
+        return redirect('/orders/'.$id.'/edit')->with('success', 'Oprava vymazána!');
+        
     }
 
     function fetch(Request $request)

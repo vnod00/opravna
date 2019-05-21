@@ -8,7 +8,7 @@ class TaskDone extends Model
 {
             //Table Name
             protected $table = 'task_done';            
-            public $primaryKey = 'id';
+            public $primaryKey = 'ord_id';
 
     
 }

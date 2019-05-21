@@ -91,6 +91,7 @@
                                     {{ __('Registruj') }}
                                 </button>
                             </div>
+                            <button class="btn btn-secondary" onclick="goBack()">Zpět</button>
                         </div>
                     </form>
                 </div>
@@ -98,4 +99,9 @@
         </div>
     </div>
 </div>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 @endsection
