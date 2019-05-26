@@ -54,7 +54,7 @@ class CustomerController extends Controller
             'name' => 'required|max:80',
             'surname' => 'required_without:ico|max:80',
             'street' => 'required|max:80',
-            'house_num' => 'required|numeric|max:10',
+            'house_num' => 'required|numeric|max:10000',
             'ico' => 'nullable|numeric|max:8',
             'city' => 'required|max:80',
             'post_code' => 'required|regex:/\d{5}/',
@@ -157,13 +157,17 @@ class CustomerController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'prodavac']);
         $order = DB::table('orders')
-        ->where('cus_id', $id)->pluck('cus_id');
-        if ($order == []) {
+        ->where('cus_id', $id)->get();
+        //return $order;
+        
+        if ($order == '[]') {
             $cus = Customer::find($id);
             $cus->delete();
             return redirect('/customers')->with('success', 'Zákazník vymazán!');
+        }else{
+            return redirect('/customers/'.$id)->with('error', 'Zákazník je vázan k nějaké zakázce, nelze vymazat!');
         }
-        return redirect('/customers/'.$id)->with('error', 'Zákazník je vázan k nějaké zakázce, nelze vymazat!');
+        
     }
     
 }

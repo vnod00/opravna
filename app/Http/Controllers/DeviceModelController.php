@@ -125,7 +125,7 @@ class DeviceModelController extends Controller
             'model' => 'required|max:80',
             'imei' => 'required|regex:/\d{15}/|unique:device_models,imei,'.$id,
             'brand_name' => 'required|exists:device_brands,brand_name',
-            'cover_image' => 'image|required|max:1999'
+            'cover_image' => 'image|nullable|max:1999'
             ]);
         if ($request->hasFile('cover_image')) {
                 // Get filename with the extension
@@ -141,7 +141,9 @@ class DeviceModelController extends Controller
         }
         //create post
         $device = DeviceModel::find($id);
-        $device->cover_image = $fileNameToStore;
+        if (isset($fileNameToStore)) {
+            $device->cover_image = $fileNameToStore;
+        }  
         $device->model_name = $request->input('model');
         $device->imei = $request->input('imei');
         $device->brand_id  = DB::table('device_brands')
@@ -163,12 +165,15 @@ class DeviceModelController extends Controller
         $request->user()->authorizeRoles(['admin', 'prodavac']);
         $order = DB::table('orders')
         ->where('model_id', $id)->pluck('model_id');
-        if ($order == []) {
+        
+        if ($order =='[]') {
             $model = DeviceModel::find($id);
             $model->delete();
             return redirect('/models')->with('success', 'Telefon vymazán!');
+        }else {
+            return redirect('/models')->with('error', 'Model je vázan k nějaké zakázce, nelze vymazat!');
         }
-        return redirect('/models')->with('error', 'Model je vázan k nějaké zakázce, nelze vymazat!');
+        
     }
     
     function fetch(Request $request)

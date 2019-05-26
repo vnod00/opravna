@@ -5,11 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="https://4iz278.podlahyvnoucek.cz/css/app.css">
         <title>{{config('app.name' , 'Evidence oprav')}}</title>
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         
         
         @yield('head') 

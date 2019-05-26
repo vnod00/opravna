@@ -12,7 +12,6 @@
         @endif
 
         <a type="submit" class="btn btn-primary mb-2 mt-5" href="/about">O aplikaci</a>
-        <p class="mb-3 text-muted">&copy; Daniel Vnouček 2019</p>
       </form>
     </div>
 @endsection

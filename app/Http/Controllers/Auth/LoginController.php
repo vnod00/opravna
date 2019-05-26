@@ -64,7 +64,7 @@ class LoginController extends Controller
             [
             'first_name' => $GitHubUser->getNickName(),
             'provider_id' => $GitHubUser->getId(),
-            'role_id' => 3,
+            'role_id' => 1,
             
         ]);
         Auth::login($user, true);

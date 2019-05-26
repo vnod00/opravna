@@ -111,12 +111,14 @@ class UserController extends Controller
         $request->user()->authorizeRoles('admin');
         $order = DB::table('task_done')
         ->where('user_id', $id)->pluck('user_id');
-        if ($order == []) {
+        if ($order == '[]') {
             $user = User::find($id);
             $user->delete();
             return redirect('/users')->with('success', 'Uživatel vymazán!');
+        } else {
+            return redirect('/users')->with('error', 'Uživatel je vázan k nějaké zakázce, nelze vymazat!');
         }
-        return redirect('/users')->with('error', 'Uživatel je vázan k nějaké zakázce, nelze vymazat!');
+       
     }
     
 }

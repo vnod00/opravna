@@ -48,6 +48,7 @@
                           @foreach ($orders as $order)
                           @foreach ($order->task as $order_task)
                    @if ($order_task->task_id == 2)
+                   <tr>
                    <th class=" p-3">ID-{{$order->ord_id}}</th>
                    <th class=" p-3">{{$order->name}}</th>
                    <th class=" p-3">{{$order->customer->name}} {{$order->customer->surname}}</th>

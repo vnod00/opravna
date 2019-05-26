@@ -20,16 +20,16 @@
     <a href="/customers" class="btn btn-primary">Zpět</a>
     @auth
     @if( Auth::user()->hasAnyRole(['admin','prodavac']))
-    {!! Form::open(['action' => ['CustomerController@destroy', $cust->cus_id], 'method' => 'POST', 'class' => 'float-right' ]) !!}
+    {!! Form::open(['action' => ['CustomerController@destroy', $cust->cus_id], 'method' => 'POST', 'class' => 'float-right delete']) !!}
     {{Form::hidden('_method', 'DELETE')}}
-    {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-    {!! Form::close() !!}
+    {{Form::submit('Delete', ['class' => 'btn btn-danger '])}}
+    {!! Form::close() !!} 
     @endif
      @endauth
 
-    <script>
-        $(".delete").on("submit", function(){
-            return confirm("Opravdu chcete tohoto zákazníka odstranit?");
-        });
-    </script>
+     <script>
+            $(".delete").on("submit", function(){
+                return confirm("Opravdu chcete tohoto zákazníka odstranit??");
+            });
+</script>
 @endsection

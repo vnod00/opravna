@@ -133,9 +133,9 @@ class RepairController extends Controller
         if ($check = '[]') {
             $repair->delete();
             return redirect('/repairs')->with('success', 'Oprava vymazána!');
-        }
-        
-        return redirect('/repairs')->with('error', 'Oprava nelze vymazat, je vázaná z nějaké zakázce!');
+        }else{
+            return redirect('/repairs')->with('error', 'Oprava nelze vymazat, je vázaná z nějaké zakázce!');
+        }      
     }
     
 }
