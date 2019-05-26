@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateDeviceModelsTable extends Migration
+class UpdateUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class UpdateDeviceModelsTable extends Migration
      */
     public function up()
     {
-        Schema::table('device_models', function (Blueprint $table) {
-            $table->Integer('brand_id');
+        
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('provider_id')->nullable();
         });
     }
+
     /**
      * Reverse the migrations.
      *

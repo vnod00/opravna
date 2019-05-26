@@ -78,7 +78,6 @@ class DeviceBrandController extends Controller
      */
     public function edit($id)
     {
-        $request->user()->authorizeRoles('admin');
         //
     }
 
@@ -91,7 +90,6 @@ class DeviceBrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->user()->authorizeRoles('admin');
         //
     }
 

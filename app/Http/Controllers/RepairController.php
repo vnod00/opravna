@@ -36,8 +36,9 @@ class RepairController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $request->user()->authorizeRoles('admin');
         return view('repairs.create');
     }
 
@@ -49,6 +50,7 @@ class RepairController extends Controller
      */
     public function store(Request $request)
     {
+        $request->user()->authorizeRoles('admin');
         $this->validate($request,[
             'name' => 'required|max:80',
             'descp' => 'required|max:2000',
@@ -82,8 +84,9 @@ class RepairController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $request->user()->authorizeRoles(['admin', 'opravar']);
         $repair = Repair::find($id);
         return view('repairs.edit')->with('repair', $repair);
     }
@@ -97,7 +100,21 @@ class RepairController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->user()->authorizeRoles(['admin', 'opravar']);
+        $this->validate($request,[
+            'name' => 'required|max:80',
+            'descp' => 'required|max:2000',
+            'price' => 'required|numeric|max:100000'
+        ]);
+        //create post
+        $repair = Repair::find($id);
+        $repair->name = $request->input('name');
+        $repair->descp = $request->input('descp');
+        $repair->price  = $request->input('price');
+        $repair->save(); 
+        
+        
+        return redirect('/repairs')->with('success', 'Oprava uložena!');
     }
 
     /**
@@ -106,13 +123,13 @@ class RepairController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $request->user()->authorizeRoles('admin');
         $repair = Repair::find($id);
         $check = DB::table('order_repair')
         ->where('rep_id', '=', $repair->rep_id)
         ->get(); 
-        //return $check;
         if ($check = '[]') {
             $repair->delete();
             return redirect('/repairs')->with('success', 'Oprava vymazána!');

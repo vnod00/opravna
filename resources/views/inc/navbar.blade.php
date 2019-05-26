@@ -9,13 +9,13 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
+          
               
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Zakázky
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu" >
                     <a class="dropdown-item" href="/orders">Přehled zakázek</a>
                     @auth
                     @if( Auth::user()->hasAnyRole(['admin','prodavac']))
@@ -26,23 +26,23 @@
                   </div>
               </div>
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Opravy
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu" >
                     <a class="dropdown-item" href="/repairs">Přehled oprav</a>                  
                     @auth
-                    @if( Auth::user()->hasAnyRole(['admin','opravar']))
+                    @if( Auth::user()->hasRole('admin'))
                         <a class="dropdown-item" href="/repairs/create">Zaeviduj opravu</a>
                     @endif
                     @endauth
                   </div>
               </div>
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Evidence telefonů
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu" >
                     <a class="dropdown-item" href="/models">Přehled telefonů</a> 
                     @auth
                     @if( Auth::user()->hasAnyRole(['admin','prodavac']))
@@ -58,10 +58,10 @@
                   </div>
               </div>
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Zakazníci
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu" >
                   <a class="dropdown-item" href="/customers">Přehled zákazníků</a>
                   @auth
                   @if( Auth::user()->hasAnyRole(['admin','prodavac']))
@@ -72,11 +72,11 @@
                 </div>
               </div>
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Personál
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/staff">Přehled zaměstnaců</a>
+                  <div class="dropdown-menu" >
+                    <a class="dropdown-item" href="/users">Přehled zaměstnaců</a>
                     @auth
                     @if( Auth::user()->hasRole('admin'))                        
                         <a class="dropdown-item" href="/register">Zaeviduj zaměstnance</a>                       
@@ -86,14 +86,14 @@
                   
               </div>
               
-          </ul>
+          
 
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">
               <!-- Authentication Links -->
               
                   <li class="nav-item dropdown">
-                      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                           {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<span class="caret"></span>
                       </a>
 
@@ -113,7 +113,7 @@
                         <a class="nav-link" href="/about">O aplikaci</a>
                       </li>
                       
-          </ul>
+                    </ul>
       </div>
   </div>
 </nav>

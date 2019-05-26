@@ -27,6 +27,7 @@ class HomeController extends Controller
     }
     public function registered()
     {
+        
         return view('registered');
     }
 }

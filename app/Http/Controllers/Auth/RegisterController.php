@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use DB;
 
 class RegisterController extends Controller
@@ -65,11 +66,12 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
+    protected function create(Request $request, array $data)
+    { 
+        $request->user()->authorizeRoles('admin');
         $role_id = DB::table('roles')
         ->where('name', "{$data['role_name']}")->value('role_id');
-         return User::create([
+         User::create([
             
             'last_name' => $data['last_name'],
             'email' => $data['email'],
@@ -79,6 +81,23 @@ class RegisterController extends Controller
             
         ]);
         
+    }
+        /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 
     protected function fetch(Request $request)

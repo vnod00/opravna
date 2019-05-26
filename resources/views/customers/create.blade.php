@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <h1>Zaeviduj nového zakazníka</h1>
-    {!! Form::open(['action' => 'CustomerController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => 'CustomerController@store', 'method' => 'POST']) !!}
         <div class="form-group">
             {{Form::label('name', 'Jméno nebo název firmy')}}
             {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Povinné'])}}

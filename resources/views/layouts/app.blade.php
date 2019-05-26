@@ -17,22 +17,12 @@
     </head>
     <body>
         @include('inc.navbar')
-        <div class="container">
+        <div class="container mt-3">
             @include('inc.messages')
             @yield('content')
-        </div>        
+        </div> 
+        @include('inc.footer')       
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-        <script>
-            CKEDITOR.replace( 'article-ckeditor' );
-        </script>
-        <script type="text/javascript">
-             $('.date').datetimepicker({
-                locale: 'cs',
-                format: 'YYYY-MM-DD',
-            });  
-            
-        </script> 
+
       </body>
-    </body>
 </html>

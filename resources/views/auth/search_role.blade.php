@@ -1,10 +1,14 @@
 
-{{Form::text('role_name', '', ['id' => 'role_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
+@if (isset($user))   
+    {{Form::text('role_name', $user->role->name, ['id' => 'role_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}} 
+@else
 
-        
+    {{Form::text('role_name', '', ['id' => 'role_name', 'class' => 'form-control', 'placeholder' => 'Vyhledat...'])}}
+    
+@endif     
         <div id="nameList" class="list-group">
         </div>
-
+        
        
        {{ csrf_field() }}
        <script>

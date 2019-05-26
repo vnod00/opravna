@@ -26,6 +26,8 @@ Route::get('/', 'PagesController@index');
  Route::resource('customers', 'CustomerController');
  Route::resource('repairs', 'RepairController');
  Route::resource('tasks', 'TaskController');
+ Route::patch('users/{user}/update',  ['as' => 'users.update', 'uses' => 'UserController@update']);
+ Route::resource('users', 'UserController');
  Route::delete('/orders/destroy_repair/{order}/{repair}', 'OrderController@destroyRepair');
  Route::post('/orders/fetch_cus', 'OrderController@fetch')->name('orders.fetch');
  Route::post('/orders/fetch_mod', 'OrderController@fetchMod')->name('orders.fetch_mod');
@@ -35,3 +37,5 @@ Route::get('/', 'PagesController@index');
 
  Route::get('/logged', 'HomeController@logged')->name('logged');
  Route::get('/registered', 'HomeController@registered')->name('registered');
+ Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');

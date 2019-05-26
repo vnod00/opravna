@@ -1,32 +1,44 @@
 @extends('layouts.app')
 @section('content')
     <h1>{{$order->name}}</h1>
-    <ul class="list-group">
-        <li class="list-group-item">Zákazník: {{$order->customer->name}} {{$order->customer->surname}}</li>
-        <li class="list-group-item">Model telefonu: {{$order->model->brand->brand_name}} {{$order->model->model_name}}</li>
-        <li class="list-group-item">Závada: {!!$order->desc!!}</li>
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item">Zákazník: {{$order->customer->name}} {{$order->customer->surname}}</li>
-        <li class="list-group-item">Model telefonu: {{$order->model->brand->brand_name}} {{$order->model->model_name}}</li>
-        <li class="list-group-item">Závada: {!!$order->desc!!}</li>
-        @foreach ($order->repair as $repair)
-                    
-                    <li class="list-group-item">Provedená oprava: {{$repair->name}}</li>
-                @endforeach
-        @foreach ($order->task as $task) 
-        <li class="list-group-item">Provedené úkony: {{$task->desc}} </li>               
+    <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Zákazník</th>
+                <td>{{$order->customer->name}} {{$order->customer->surname}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Model telefonu</th>
+                <td>{{$order->model->brand->brand_name}} {{$order->model->model_name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Závada</th>
+                <td>{!!$order->desc!!}</td>
+               </tr>
+               @foreach ($order->repair as $repair)
+               <tr class="bg-warning">
+                    <th scope="row">Provedená oprava</th>
+                    <td>{{$repair->name}}</td>
+               </tr>  
+           @endforeach   
+            @foreach ($order->task as $task) 
+            <tr class="bg-info">
+                    <th scope="row">Provedené úkony</th>
+                    <td>{{$task->desc}}</td>
+            </tr>
         @endforeach 
-    </ul>
-    <hr>
-    <small>Založeno dne {{$order->created_at}}</small>
-    <a href="/orders" class="btn btn-default">Zpět</a>
-    
-    {!! Form::open(['action' => ['OrderController@destroy', $order->ord_id], 'method' => 'POST', 'class' => 'float-right delete ']) !!}
-    {{Form::hidden('_method', 'DELETE')}}
-    {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-    {!! Form::close() !!}
-    <a href="/orders/{{{$order->ord_id}}}/edit" class="btn btn-secondary float-right mr-2" role="button" aria-pressed="true">Upravit</a>
+            </tbody>
+    </table>
+    @auth
+        @if( Auth::user()->hasAnyRole(['admin','prodavac']))
+        {!! Form::open(['action' => ['OrderController@destroy', $order->ord_id], 'method' => 'POST', 'class' => 'float-right delete ']) !!}
+        {{Form::hidden('_method', 'DELETE')}}
+        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+        {!! Form::close() !!}
+        @endif
+    @endauth
+          <a href="/orders/{{{$order->ord_id}}}/edit" class="btn btn-secondary  mr-2" role="button" aria-pressed="true">Upravit</a>
+          <a href="/orders" class="btn btn-primary">Zpět</a>
     <script>
         $(".delete").on("submit", function(){
             return confirm("Opravdu chcete tuto zakázku odstranit??");

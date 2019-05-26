@@ -4,8 +4,8 @@
  
 @endsection
 @section('content')
-    <h1>Zaeviduj nového zakazníka</h1>
-    {!! Form::open(['action' => 'CustomerController@update', $cust->cus_id, 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    <h1>Uprav zakazníka</h1>
+    {!! Form::open(['action' => ['CustomerController@update', $cust->cus_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('name', 'Jméno nebo název firmy')}}
             {{Form::text('name', $cust->name, ['class' => 'form-control', 'placeholder' => 'Povinné'])}}
@@ -41,7 +41,8 @@
         <div class="form-group">
                 {{Form::label('email', 'Email')}}
                 {{Form::text('email', $cust->email, [ 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
-        </div>    
+        </div>
+        {{Form::hidden('_method', 'PUT')}}    
         {{Form::submit('Ulož', ['class'=>'btn btn-primary btn-lg active', 'role'=>'button', 'aria-pressed'=>'true'])}}
     {!! Form::close() !!}
 @endsection

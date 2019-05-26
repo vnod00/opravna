@@ -38,8 +38,9 @@ class DeviceModelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $request->user()->authorizeRoles(['admin', 'prodavac']);
         return view('models.create');
     }
 
@@ -51,13 +52,31 @@ class DeviceModelController extends Controller
      */
     public function store(Request $request)
     {
+        $request->user()->authorizeRoles(['admin', 'prodavac']);
         $this->validate($request,[
             'model' => 'required|max:80',
-            'imei' => 'required|regex:/\d{15}/',
-            'brand_name' => 'required|exists:device_brands,brand_name'
+            'imei' => 'required|regex:/\d{15}/|unique:device_models,imei',
+            'brand_name' => 'required|exists:device_brands,brand_name',
+            'cover_image' => 'image|required|max:1999'
         ]);
+        if ($request->hasFile('cover_image')) {
+            // Get filename with the extension
+            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('cover_image')->storeAs('public/cover_images/', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+        
         //create post
         $device = new DeviceModel;
+        $device->cover_image = $fileNameToStore;
         $device->model_name = $request->input('model');
         $device->imei = $request->input('imei');
         $device->brand_id  = DB::table('device_brands')
@@ -76,8 +95,7 @@ class DeviceModelController extends Controller
      */
     public function show($id)
     {
-        $model = DeviceModel::find($id);
-        return view('models.show')->with('model', $model);
+
     }
 
     /**
@@ -86,8 +104,9 @@ class DeviceModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $request->user()->authorizeRoles(['admin', 'prodavac']);
         $model = DeviceModel::find($id);
         return view('models.edit')->with('model', $model);
     }
@@ -101,13 +120,28 @@ class DeviceModelController extends Controller
      */
     public function update(Request $request, $id)
     {   
+        $request->user()->authorizeRoles(['admin', 'prodavac']);
         $this->validate($request,[
             'model' => 'required|max:80',
-            'imei' => 'required|regex:/\d{15}/',
-            'brand_name' => 'required|exists:device_brands,brand_name'
-        ]);
+            'imei' => 'required|regex:/\d{15}/|unique:device_models,imei,'.$id,
+            'brand_name' => 'required|exists:device_brands,brand_name',
+            'cover_image' => 'image|required|max:1999'
+            ]);
+        if ($request->hasFile('cover_image')) {
+                // Get filename with the extension
+                $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('cover_image')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore= time().'.'.$extension;
+                // Upload Image
+                $path = $request->file('cover_image')->storeAs('public/cover_images/', $fileNameToStore);
+        }
         //create post
         $device = DeviceModel::find($id);
+        $device->cover_image = $fileNameToStore;
         $device->model_name = $request->input('model');
         $device->imei = $request->input('imei');
         $device->brand_id  = DB::table('device_brands')
@@ -124,11 +158,17 @@ class DeviceModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $model = DeviceModel::find($id);
-        $model->delete();
-        return redirect('/models')->with('success', 'Telefon vymazán!');
+        $request->user()->authorizeRoles(['admin', 'prodavac']);
+        $order = DB::table('orders')
+        ->where('model_id', $id)->pluck('model_id');
+        if ($order == []) {
+            $model = DeviceModel::find($id);
+            $model->delete();
+            return redirect('/models')->with('success', 'Telefon vymazán!');
+        }
+        return redirect('/models')->with('error', 'Model je vázan k nějaké zakázce, nelze vymazat!');
     }
     
     function fetch(Request $request)

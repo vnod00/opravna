@@ -5,7 +5,7 @@
     <ul class="list-group">
         @foreach ($cust as $cus)
             <li class="list-group-item">
-                <b>{{$cus->name}} {{$cus->surname}}</b> {{$cus->email}}
+                <b>{{$cus->name}} {{$cus->surname}}</b> – {{$cus->email}}
                 
                 <a href="/customers/{{$cus->cus_id}}" class="btn btn-secondary float-right" role="button" aria-pressed="true">Detail</a> 
             </li>

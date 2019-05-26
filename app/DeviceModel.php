@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DeviceModel extends Model
 {
     protected $table = 'device_models';
-    public $primaryKey = 'model_id';
+    public $primaryKey = 'id';
     public $timestamps = true;
 
      public function brand()
@@ -16,6 +16,6 @@ class DeviceModel extends Model
     } 
     public function order()
     {
-        return $this->hasMany('App\Order', 'model_id');
+        return $this->hasMany('App\Order', 'ord_id');
     }
 }

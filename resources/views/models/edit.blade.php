@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <h1>Uprav telefon</h1>
-    {!! Form::open(['action' => ['DeviceModelController@update', $model->model_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => ['DeviceModelController@update', $model->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('model', 'Model')}}
             {{Form::text('model', $model->model_name, ['class' => 'form-control', 'placeholder' => 'Povinné'])}}

@@ -8,19 +8,29 @@
 @endsection
 @section('content')
     <h1>Uprav zakázku</h1>
-    <div class="form-group">
-         @foreach ($order->repair as $done) 
-        {!! Form::open(['action' => ['OrderController@destroyRepair',  $order->ord_id, $done->rep_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-            {{Form::label('rep-done', 'Provedené opravy: ')}}
+    @auth
+    @if( Auth::user()->hasAnyRole(['admin','opravar']))
+    {{Form::label('name_rep', 'Provedené opravy')}}
+         <table class="table">
+                <tbody>
+                @foreach ($order->repair as $done)
+                  <tr>
+                    <th scope="row">Oprava</th>
+                    <td>{{$done->name}}
+                            {!! Form::open(['action' => ['OrderController@destroyRepair',  $order->ord_id, $done->rep_id], 'method' => 'POST']) !!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger float-right'])}}
+                         {!! Form::close() !!} 
+                    </td>
+                  </tr>
+                @endforeach
+                </tbody>
+            </table>      
+    @endif
+@endauth
+
             
-            {{Form::label('name', $done->name)}}
-            
-            {{Form::hidden('_method', 'DELETE')}}
-            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-         {!! Form::close() !!}          
-        @endforeach
-            
-    </div>
+    
     {!! Form::open(['action' => ['OrderController@update', $order->ord_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="form-group">
         {{Form::label('name', 'Název')}}
@@ -41,9 +51,9 @@
             {{Form::label('acc_date', 'Datum přijetí')}}
             {{Form::text('acc_date', $order->date_acceptance, ['class' => 'form-control date', 'id'=>'datepicker']) }}
         </div>
-        <div class="form-group col pr-0">
+        <div class="form-group col pr-0" id="hand_date" style="display: none">
             {{Form::label('hand_date', 'Datum vyhotovení')}}
-            {{Form::text('hand_date', null, ['class' => 'form-control date', 'id'=>'datepicker2']) }}
+            {{Form::text('hand_date', $order->date_handover, ['class' => 'form-control date', 'id'=>'datepicker2']) }}
         </div>
     </div>
 </div>       
@@ -51,39 +61,39 @@
             {{Form::label('descp_ord', 'Popis vady')}}
             {{Form::textarea('descp', $order->desc, [ 'id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Povinné'])}}
     </div>
-    
+    @auth
+    @if( Auth::user()->hasAnyRole(['admin','opravar']))
     <div class="form-group" id="repair_div">
-        {{Form::label('rep_sel', 'Zadej provedenou opravu')}}
-        <div class="input-group mb-3" id="repair">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Vyber provedenou opravu</label>
-            </div>
-            <select name="rep_sel" class="form-control">
-              <option  selected></option>
-              @foreach ($repairs as $repair)               
-                    <option >{{$repair->name}}</option>                                
-              @endforeach 
-            </select> 
-            
-        </div>   
-    </div>   
+            {{Form::label('rep_sel', 'Zadej provedenou opravu')}}
+            <div class="input-group mb-3" id="repair">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Nepovinné</label>
+                </div>
+                <select name="rep_sel" class="form-control">
+                  <option  selected></option>
+                  @foreach ($repairs as $repair)               
+                        <option>{{$repair->name}}</option>                                
+                  @endforeach 
+                </select> 
+                
+            </div>   
+        </div>     
+    @endif
+@endauth
+  
     <div class="form-group">
         {{Form::label('task_sel', 'Zadej změnu na zakázce')}}
         <div class="input-group mb-3">          
             <div class="input-group-prepend">
-             <label class="input-group-text" for="inputGroupSelect01">Změny na zakázce</label>
+             <label class="input-group-text" for="inputGroupSelect01">Nepovinné</label>
             </div>
-            <select name="task_sel" class="form-control" >
-             <option  selected></option>
+            <select name="task_sel" class="form-control" id="task_sel">
+             <option selected >{{$task_name}}</option>
                 @foreach ($tasks as $task) 
-                    <option >{{$task->desc}}</option>               
+                    <option value ="{{{$task->desc}}}">{{$task->desc}}</option>               
                  @endforeach 
             </select>
         </div>
-   </div>
-   <div class="form-group">
-          
-        {{Form::file('cover_image')}}
    </div>
         {{Form::hidden('_method', 'PUT')}}
         {{Form::submit('Ulož', ['class'=>'btn btn-primary'])}}
@@ -92,5 +102,30 @@
             $(".delete").on("submit", function(){
                 return confirm("Opravdu chcete tuto opravu odstranit??");
             });
-        </script>
+    </script>
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+                CKEDITOR.replace( 'article-ckeditor' );
+    </script>
+    <script type="text/javascript">
+                 $('.date').datetimepicker({
+                    locale: 'cs',
+                    format: 'YYYY-MM-DD',
+                });  
+                
+    </script> 
+    <script type="text/javascript">
+        $(function () {
+            $("#task_sel").change(function() {
+            var val = $(this).val();
+            if(val === "Zakázka vyhotovena") {
+                 $("#hand_date").show();
+            }
+            else  {
+                $("#hand_date").hide();
+            }
+        });
+    });
+    </script>
+
 @endsection

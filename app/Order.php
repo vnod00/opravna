@@ -16,7 +16,7 @@ class Order extends Model
         return $this->belongsToMany('App\Task', 'task_done','ord_id', 'task_id');
     }
     public function model(){
-        return $this->belongsTo('App\DeviceModel', 'model_id');
+        return $this->belongsTo('App\DeviceModel');
     }
     public function customer(){
         return $this->belongsTo('App\Customer', 'cus_id');
