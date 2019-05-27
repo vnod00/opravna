@@ -85,7 +85,7 @@ class UserController extends Controller
         $request->user()->authorizeRoles('admin');
         $this->validate(request(), [
             'first_name' => 'required',
-            'last_name' => 'required',
+            'last_name' => 'nullable',
             'email' => 'required|unique:users,email,'.$id,
             'role_name' => 'required', 'exists:roles,name'
         ]);

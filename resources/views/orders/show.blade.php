@@ -8,8 +8,16 @@
                 <td>{{$order->customer->name}} {{$order->customer->surname}}</td>
               </tr>
               <tr>
+                  <th scope="row">E-mail zákazníka</th>
+                  <td>{{$order->customer->email}}</td>
+               </tr>
+              <tr>
                 <th scope="row">Model telefonu</th>
                 <td>{{$order->model->brand->brand_name}} {{$order->model->model_name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">IMEI</th>
+                <td>{{$order->model->brand->imei}} {{$order->model->imei}}</td>
               </tr>
               <tr>
                 <th scope="row">Závada</th>
@@ -23,7 +31,7 @@
            @endforeach   
             @foreach ($order->task as $task) 
             <tr class="bg-info">
-                    <th scope="row">Provedené úkony</th>
+                    <th scope="row">Aktuální stav</th>
                     <td>{{$task->desc}}</td>
             </tr>
         @endforeach 

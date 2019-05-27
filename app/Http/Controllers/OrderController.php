@@ -67,7 +67,7 @@ class OrderController extends Controller
         $order->date_acceptance = $request->input('acc_date');  
         $order->cus_id  = DB::table('customers')
         ->where('email', "{$request->input('cus_email')}")->value('cus_id');
-        $order->id  = DB::table('device_models')
+        $order->model_id  = DB::table('device_models')
         ->where('imei', "{$request->input('model_imei')}")->value('id');
         $order->save(); 
 

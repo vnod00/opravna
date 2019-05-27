@@ -129,8 +129,9 @@ class RepairController extends Controller
         $repair = Repair::find($id);
         $check = DB::table('order_repair')
         ->where('rep_id', '=', $repair->rep_id)
-        ->get(); 
-        if ($check = '[]') {
+        ->get();
+        return $check;
+        if ($check == '[]') {
             $repair->delete();
             return redirect('/repairs')->with('success', 'Oprava vymazána!');
         }else{
